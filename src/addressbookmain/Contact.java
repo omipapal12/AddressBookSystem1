@@ -1,15 +1,17 @@
+package addressbookmain;
 public class Contact {
     //declaring contact details variables
-    private String firstName;
+    public String firstName;
     private String lastName;
     private String address;
     private String city;
     private String state;
-    private int zip;
+    private String zip;
     private String phoneNumber;
     private String email;
 
     // access private fields using getters and setters
+
 
     public String getFirstName() {
         return firstName;
@@ -51,11 +53,11 @@ public class Contact {
         this.state = state;
     }
 
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
@@ -72,14 +74,12 @@ public class Contact {
     }
 
     public void setEmail(String email) {
-        this.email =email;
+        this.email = email;
     }
-
-    //Overridden Java toString method
 
     @Override
     public String toString() {
-        return "ContactDetails{" +
+        return "Contact{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
