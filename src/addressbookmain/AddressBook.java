@@ -1,17 +1,20 @@
 package addressbookmain;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 public class AddressBook {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Contact> personDetailsList = new ArrayList<Contact>();
     static HashMap<String, ArrayList<Contact>> hashmap = new HashMap<>();
+
     static AddressBook personDetails = new AddressBook();
+
     /*
      * --------- Add Person Details and store in array
      */
     public void addDetails() {
+
         // taking value from user
         Contact details = new Contact();
         System.out.println("Add person Details");
@@ -118,6 +121,19 @@ public class AddressBook {
         }
     }
 
+    public void searchbycity(String city) {
+        for (int k = 0; k < personDetailsList.size(); k++) {
+            String contactName = personDetailsList.get(k).getCity();
+
+            if (city.equals(contactName)) {
+                System.out.println("This Person is Already Present");
+            } else {
+                System.out.println("You can Add this Person");
+                break;
+            }
+        }
+    }
+
     /*
      * Delete person details through person 1st name
      */
@@ -145,10 +161,10 @@ public class AddressBook {
         while (flag) {
             System.out.println("choose what you want to do :: ");
             System.out.println(
-                    "1.Create new address book.\n2.Edit existing address book.\n3.Display all address books.\n4.exit");
+                    "1.Create new address book.\n2.Edit existing address book.\n3.Display all address books.\n4.Check Duplicate Name.\n5.Seach Person By City.\n6.Exit");
             int choose = sc.nextInt();
 
-            if (choose == 4) {
+            if (choose == 6) {
                 System.out.println("Exit");
                 break;
             }
@@ -166,9 +182,9 @@ public class AddressBook {
                     personDetailsList = newAddressBook;
                     while (flag) {
                         System.out.println("Choose what you want to do: ");
-                        System.out.println("1.Add details.\n2.Edit details.\n3.Delete contact.\n4.Exit");
+                        System.out.println("1.Add details.\n2.Edit details.\n3.Delete contact.\n4.Check Duplicate Name.\n5.Search Person By City \n6.Exit");
                         int choose1 = sc.nextInt();
-                        if (choose1 == 4) {
+                        if (choose1 == 6) {
                             System.out.println("Exited");
                             break;
                         }
@@ -188,6 +204,14 @@ public class AddressBook {
                                 } else {
                                     System.out.println("List Cannot be Deleted");
                                 }
+                            case 4:
+                                System.out.println("Enter the name you want to check");
+                                String enteredName = sc.next();
+                                personDetails.duplicateCheck(enteredName);
+                            case 5:
+                                System.out.println("Enter city name to check the person");
+                                String eneterdCityName = sc.next();
+                                personDetails.searchbycity(eneterdCityName);
                                 break;
                             default:
                                 System.out.println("Choose valid option");
@@ -238,6 +262,10 @@ public class AddressBook {
                                     String enteredName = sc.next();
                                     personDetails.duplicateCheck(enteredName);
                                     break;
+                                case 5:
+                                    System.out.println("Enter The Name You Want To Search Person In City");
+                                    String eneterdCityName = sc.next();
+                                    personDetails.searchbycity(eneterdCityName);
                                 default:
                                     System.out.println("Choose valid option :: ");
                                     break;
@@ -259,5 +287,4 @@ public class AddressBook {
             }
         }
     }
-
 }
