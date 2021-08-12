@@ -31,7 +31,7 @@ public class ContactDetails {
                      while (i.hasNext()) {
                          System.out.println(i.next());
                      }
-                     System.out.println("Enter Address Book name you want to Open : ");
+                     System.out.println("Enter Address Book name you want to Open  : ");
                      String name = sc.nextLine();
                      System.out.println("Current Address Book is : " + name);
                      AddressBook.addressBookOptions(addressBookMap.get(name));// call method with passing address book
