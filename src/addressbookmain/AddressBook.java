@@ -1,9 +1,6 @@
 package addressbookmain;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AddressBook {
@@ -11,6 +8,9 @@ public class AddressBook {
     public static Map<String, Contact> nameHashMap = new HashMap<String, Contact>();
     public static Map<String, Contact> cityHashMap = new HashMap<String, Contact>();
     public static Map<String, Contact> stateHashMap = new HashMap<String, Contact>();
+
+    static Scanner sc = new Scanner(System.in);
+    static AddressBook addressBook = new AddressBook();
 
     public boolean addContact(Contact contact) {
         List<Contact> checkByName = searchByName(contact.getFirstName());
@@ -49,6 +49,14 @@ public class AddressBook {
 
     public static void viewByState(Map<String, Contact> stateHashMap) {
         stateHashMap.entrySet().stream().forEach(e -> System.out.println(e.getKey() + "=" + e.getValue().toString()));
+    }
+
+    public List<Contact> sortBy(Function<? super Contact, ? extends String> key) {
+        return contactList.stream().sorted(Comparator.comparing(key)).collect(Collectors.toList());
+    }
+
+    public List<Contact> sortByZip(Function<? super Contact, ? extends Long> key) {
+        return contactList.stream().sorted(Comparator.comparing(key)).collect(Collectors.toList());
     }
 
     // method for edit contact
@@ -111,7 +119,8 @@ public class AddressBook {
             System.out.println("2. Edit contact details");
             System.out.println("3. Delete contact details");
             System.out.println("4. Show contacts details");
-            System.out.println("5. Back to main menu");
+            System.out.println("5. Sort Address Book");
+            System.out.println("6. Back to main menu");
             System.out.print("Enter Your choice: ");
             int choice = sc.nextInt();
             sc.nextLine();
@@ -163,6 +172,9 @@ public class AddressBook {
                     System.out.println(addressBook.toString()); // call tostring method for showing details
                     break;
                 case 5:
+                    sortByOption();
+                    break;
+                case 6:
                     return;
                 default:
                     System.out.println("Invalid Choice!");
@@ -256,6 +268,40 @@ public class AddressBook {
                 return;
             default:
                 System.out.println("Invalid Option");
+        }
+    }
+
+    public static void sortByOption() {
+        System.out.println("1. By first name");
+        System.out.println("2. By last name");
+        System.out.println("3. By city");
+        System.out.println("4. By state");
+        System.out.println("5. By zip");
+        System.out.println("6. Back");
+        System.out.print("Your choice: ");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1:
+                addressBook.sortBy(Contact::getFirstName).forEach(System.out::println);
+                break;
+            case 2:
+                addressBook.sortBy(Contact::getLastName).forEach(System.out::println);
+                break;
+            case 3:
+                addressBook.sortBy(Contact::getCity).forEach(System.out::println);
+                break;
+            case 4:
+                addressBook.sortBy(Contact::getState).forEach(System.out::println);
+                break;
+            case 5:
+                addressBook.sortBy(Contact::getZip).forEach(System.out::println);
+                break;
+            case 6:
+                return;
+            default:
+                System.out.println("INVALID CHOICE!");
         }
     }
 }
